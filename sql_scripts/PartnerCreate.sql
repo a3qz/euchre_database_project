@@ -1,5 +1,5 @@
 create table Partner(
-    gameid int, 
+    gameid varchar(37), 
     partner1netid varchar(8),
     partner2netid varchar(8),
     partner1score int,
