@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<script
+src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous">	
+</script>
+
+<script type="text/javascript">
+	function addPlayer(){
+		var fullName = $("#fullName").val();
+		var netID = $("#netID").val();
+		console.log(fullName);
+		console.log(netID);
+		data = {
+			"name": fullName,
+			"netid": netID
+		}
+		$.ajax({
+			type: "POST",
+			url: "https://test-cse30246.azurewebsites.net/api/HttpTriggerCSharp1?code=Y7E52KmcaPJ8buipNlxRUsJBvUb2YhUdy619QqYa/6O57QVUfMeaAQ==",
+			data: JSON.stringify(data),
+			success: function () { console.log("success");},
+			dataType: "application/json"
+		});
+	}
+
+
+	function addGame(){
+		data = {
+			"team1score": $("#team1Score").val(),
+			"team2score": $("#team2Score").val(),
+			"team1": {
+				"partner1netid": $("#t1p1NetID").val(),
+				"partner2netid": $("#t1p2NetID").val(),
+				"partner1score": "5",
+				"partner2score": "5",
+				"teamnumber" : "1"
+			},
+			"team2":
+			{
+				"partner1netid": $("#t2p1NetID").val(),
+				"partner2netid": $("#t2p2NetID").val(),
+				"partner1score": "2",
+				"partner2score": "2",
+				"teamnumber" : "2"
+			}
+		}
+		$.ajax({
+			type: "POST",
+			url: "https://prod-28.eastus.logic.azure.com:443/workflows/b85036662ad042deb191ebd51dda5394/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=40vw--ScvCGpV5L5ETsPFsG-8kFfPqdGsw2bFVJxlvg",
+			data: JSON.stringify(data),
+			success: function () { console.log("success");},
+			dataType: "application/json",
+			headers: {"Content-Type": "application/json"}
+		});
+	}
+
+	function displayGames(){
+		data = {
+			"netid": $("#query").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			data: JSON.stringify(data),
+			url: "https://test-cse30246.azurewebsites.net/api/ViewRawGames?code=LL4KqwnGkhRtkninPjYRtHTLtHPr1lYYkHejWQ7idA4edTV6o80uEQ==",
+			success: function (text) { createTable(text); },
+			headers: {"Content-Type": "application/json"}
+
+		});
+	}
+
+	function createTable(tableData) {
+	  var table = document.createElement('table');
+	  var tableBody = document.createElement('tbody');
+
+	  tableData.forEach(function(rowData) {
+	    var row = document.createElement('tr');
+
+	    rowData.forEach(function(cellData) {
+	      var cell = document.createElement('td');
+	      cell.appendChild(document.createTextNode(cellData));
+	      row.appendChild(cell);
+	    });
+
+	    tableBody.appendChild(row);
+	  });
+
+	  table.appendChild(tableBody);
+	  //document.body.appendChild(table);
+	  $("#allGameTable").html(table);
+}
+
+
+</script>
+
+
+<div id="addPlayer" style="border-style: solid;">
+Full Name <input type="text" id="fullName"><br/>
+Net ID <input type="text" id="netID"><br/>
+<button id="addPlayerButton" onclick="addPlayer()">Submit</button>
+</div>
+
+<br/>
+
+<div id="addGame" style="border-style: solid;">
+Team 1 Score <input type="text" id="team1Score"><br/>
+Team 2 Score<input type="text" id="team2Score"><br/>
+Team 1 Player 1 ID <input type="text" id="t1p1NetID"><br/>
+Team 1 Player 2 ID <input type="text" id="t1p2NetID"><br/>
+Team 2 Player 1 ID <input type="text" id="t2p1NetID"><br/>
+Team 2 Player 2 Id <input type="text" id="t2p2NetID"><br/>
+
+<button id="addGameButton" onclick="addGame()">Submit</button>
+</div>
+
+<br/>
+<br/>
+
+<div>
+<button id="displayGames" onclick="displayGames()">Display Games</button>
+<input type="text" id="query">
+<div id="allGameTable">
+
+
+</div>
+
+</div>
+
+
+
+
+
+</html>
+
