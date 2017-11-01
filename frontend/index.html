@@ -56,6 +56,50 @@ crossorigin="anonymous">
 		});
 	}
 
+	function updateGame(){
+		data = {
+			"team1score": $("#team1ScoreUpdate").val(),
+			"team2score": $("#team2ScoreUpdate").val(),
+			"team1": {
+				"partner1netid": $("#t1p1NetIDUpdate").val(),
+				"partner2netid": $("#t1p2NetIDUpdate").val(),
+				"partner1score": "5",
+				"partner2score": "5",
+				"teamnumber" : "1"
+			},
+			"team2":
+			{
+				"partner1netid": $("#t2p1NetIDUpdate").val(),
+				"partner2netid": $("#t2p2NetIDUpdate").val(),
+				"partner1score": "2",
+				"partner2score": "2",
+				"teamnumber" : "2"
+			}
+		}
+		$.ajax({
+			type: "POST",
+			url: "https://test-cse30246.azurewebsites.net/api/UpdateGame?code=QQXncCNrMnfapoFUXFm0G1aUiN3VXPY47gRn6rbPBOUWIaitCPpJwg==",
+			data: JSON.stringify(data),
+			success: function () { console.log("success");},
+			dataType: "application/json",
+			headers: {"Content-Type": "application/json"}
+		});
+	}
+    function addTournament(){
+		data = {
+			"gameid": $("#gameidtourny").val(),
+			"roundnumber": $("#roundnumber").val(),
+		}
+		$.ajax({
+			type: "POST",
+			url: "https://test-cse30246.azurewebsites.net/api/AddTournament?code=IM0ocr1c/CK/fpzXEOt3aCDPrnoyYiDwLGeoeL8MMZ45tXG0B3yW5g==",
+			data: JSON.stringify(data),
+			success: function () { console.log("success");},
+			dataType: "application/json",
+			headers: {"Content-Type": "application/json"}
+		});
+	}
+
 	function displayGames(){
 		data = {
 			"netid": $("#query").val()
@@ -65,13 +109,37 @@ crossorigin="anonymous">
 			type: "POST",
 			data: JSON.stringify(data),
 			url: "https://test-cse30246.azurewebsites.net/api/ViewRawGames?code=LL4KqwnGkhRtkninPjYRtHTLtHPr1lYYkHejWQ7idA4edTV6o80uEQ==",
-			success: function (text) { createTable(text); },
+			success: function (text) { createTable(text, "allGameTable"); },
 			headers: {"Content-Type": "application/json"}
 
 		});
 	}
 
-	function createTable(tableData) {
+    function displayPlayers(){
+        $.ajax({
+			type: "POST",
+            data: JSON.stringify({}),
+			url: "https://test-cse30246.azurewebsites.net/api/ViewPlayers?code=shSYu/2Q/NH/7JgcIassjqsYhF2/0ot79wviaqbx6hCOG6aUiqxV6Q==",
+			success: function (text) { createTable(text, "displayPlayersOutput"); },
+			headers: {"Content-Type": "application/json"}
+
+		});
+    }
+    function deleteGame(){
+		data = {
+			"gameid": $("#deleteGameQuery").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			data: JSON.stringify(data),
+			url: "https://test-cse30246.azurewebsites.net/api/DeleteGame?code=tuX1nVriL6i7nYmF3/bASm6gUnczSZMJt4kcyD40tOF7hdPwDyHArw==",
+			headers: {"Content-Type": "application/json"}
+
+		});
+	}
+
+	function createTable(tableData, tableName) {
 	  var table = document.createElement('table');
 	  var tableBody = document.createElement('tbody');
 
@@ -89,7 +157,7 @@ crossorigin="anonymous">
 
 	  table.appendChild(tableBody);
 	  //document.body.appendChild(table);
-	  $("#allGameTable").html(table);
+	  $("#" + tableName).html(table);
 }
 
 
@@ -105,14 +173,41 @@ Net ID <input type="text" id="netID"><br/>
 <br/>
 
 <div id="addGame" style="border-style: solid;">
+Add Game
+<br/>
 Team 1 Score <input type="text" id="team1Score"><br/>
 Team 2 Score<input type="text" id="team2Score"><br/>
 Team 1 Player 1 ID <input type="text" id="t1p1NetID"><br/>
 Team 1 Player 2 ID <input type="text" id="t1p2NetID"><br/>
 Team 2 Player 1 ID <input type="text" id="t2p1NetID"><br/>
-Team 2 Player 2 Id <input type="text" id="t2p2NetID"><br/>
+Team 2 Player 2 ID <input type="text" id="t2p2NetID"><br/>
 
 <button id="addGameButton" onclick="addGame()">Submit</button>
+</div>
+<br/>
+
+<div id="updateGame" style="border-style: solid;">
+Update Game
+<br/>
+Team 1 Score <input type="text" id="team1ScoreUpdate"><br/>
+Team 2 Score<input type="text" id="team2ScoreUpdate"><br/>
+Team 1 Player 1 ID <input type="text" id="t1p1NetIDUpdate"><br/>
+Team 1 Player 2 ID <input type="text" id="t1p2NetIDUpdate"><br/>
+Team 2 Player 1 ID <input type="text" id="t2p1NetIDUpdate"><br/>
+Team 2 Player 2 ID <input type="text" id="t2p2NetIDUpdate"><br/>
+
+<button id="updateGameButton" onclick="updateGame()">Submit</button>
+</div>
+
+<br/>
+
+<div id="addTournament" style="border-style: solid;">
+Add Tournament
+<br/>
+Game ID <input type="text" id="gameidtourny"><br/>
+Round Number<input type="text" id="roundnumber"><br/>
+
+<button id="addTournamentButton" onclick="addTournament()">Submit</button>
 </div>
 
 <br/>
@@ -123,13 +218,23 @@ Team 2 Player 2 Id <input type="text" id="t2p2NetID"><br/>
 <input type="text" id="query">
 <div id="allGameTable">
 
-
 </div>
 
 </div>
 
+<br/>
+<br/>
+<div>
+<button id="displayPlayers" onclick="displayPlayers()">Display Players</button>
+<div id = "displayPlayersOutput">
 
 
+<br/>
+<br/>
+</div>
+<button id="deleteGame" onclick="deleteGame()">Delete Game</button>
+<input type="text" id="deleteGameQuery">
+</div>
 
 
 </html>
