@@ -58,6 +58,7 @@ crossorigin="anonymous">
 
 	function updateGame(){
 		data = {
+			"gameid": $("#gameidupdate").val(),
 			"team1score": $("#team1ScoreUpdate").val(),
 			"team2score": $("#team2ScoreUpdate").val(),
 			"team1": {
@@ -166,7 +167,7 @@ crossorigin="anonymous">
 
 <div id="addPlayer" style="border-style: solid;">
 Full Name <input type="text" id="fullName"><br/>
-Net ID <input type="text" id="netID"><br/>
+Net ID    <input type="text" id="netID"><br/>
 <button id="addPlayerButton" onclick="addPlayer()">Submit</button>
 </div>
 
@@ -176,7 +177,7 @@ Net ID <input type="text" id="netID"><br/>
 Add Game
 <br/>
 Team 1 Score <input type="text" id="team1Score"><br/>
-Team 2 Score<input type="text" id="team2Score"><br/>
+Team 2 Score <input type="text" id="team2Score"><br/>
 Team 1 Player 1 ID <input type="text" id="t1p1NetID"><br/>
 Team 1 Player 2 ID <input type="text" id="t1p2NetID"><br/>
 Team 2 Player 1 ID <input type="text" id="t2p1NetID"><br/>
@@ -189,8 +190,9 @@ Team 2 Player 2 ID <input type="text" id="t2p2NetID"><br/>
 <div id="updateGame" style="border-style: solid;">
 Update Game
 <br/>
+Game ID <input type="text" id="gameidupdate"><br/>
 Team 1 Score <input type="text" id="team1ScoreUpdate"><br/>
-Team 2 Score<input type="text" id="team2ScoreUpdate"><br/>
+Team 2 Score <input type="text" id="team2ScoreUpdate"><br/>
 Team 1 Player 1 ID <input type="text" id="t1p1NetIDUpdate"><br/>
 Team 1 Player 2 ID <input type="text" id="t1p2NetIDUpdate"><br/>
 Team 2 Player 1 ID <input type="text" id="t2p1NetIDUpdate"><br/>
@@ -205,7 +207,7 @@ Team 2 Player 2 ID <input type="text" id="t2p2NetIDUpdate"><br/>
 Add Tournament
 <br/>
 Game ID <input type="text" id="gameidtourny"><br/>
-Round Number<input type="text" id="roundnumber"><br/>
+Round Number <input type="text" id="roundnumber"><br/>
 
 <button id="addTournamentButton" onclick="addTournament()">Submit</button>
 </div>
