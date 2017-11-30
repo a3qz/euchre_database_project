@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript">
+    function displayPlayers() {
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({}),
+            url: "https://test-cse30246.azurewebsites.net/api/ViewPlayers?code=shSYu/2Q/NH/7JgcIassjqsYhF2/0ot79wviaqbx6hCOG6aUiqxV6Q==",
+            success: function (text) {
+                createTable(text, "displayPlayersOutput");
+            },
+            headers: {
+                "Content-Type": "application/json"
+            }
+
+        });
+    }
+
+    function incScore() {
+        var initScore = $('.incScore').val();
+        var afterScore = initScore++;
+        $('#team1Score').val(afterScore);
+    }
+
+    function decScore() {
+        var initScore = $('.decScore').val();
+        var afterScore = initScore--;
+        $('#team2Score').val(afterScore);
+    }
+</script>
+<div id="team1">
+</div>
+
+<div id="score1">
+    <button class="decScore" onclick="decScore()">-</button>
+    <input type="text" id="team1Score">
+    <button class="incScore" onclick="incScore()">+</button>
+</div>
+<div>
+    <button class="decScore" onclick="decScore()">-</button>
+    <input type="text" id="team2Score">
+    <button class="incScore" onclick="incScore()">+</button>
+</div>
+
+<div id="submit">
+    <button id="submitButton" onclick="submit()">Submit</button>
+</div>
+
+<div id="team2">
+</div>
+
+</html>
