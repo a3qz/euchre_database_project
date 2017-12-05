@@ -16,30 +16,38 @@
         });
     }
 
-    function incScore() {
-        var initScore = $('.incScore').val();
-        var afterScore = initScore++;
-        $('#team1Score').val(afterScore);
+    function incScore1() {
+      //  var initScore = $('.incScore').val();
+      //  var afterScore = initScore++;
+        //$('#team1Score').val(afterScore);
+        document.getElementById("team1Score").stepUp();
     }
 
-    function decScore() {
-        var initScore = $('.decScore').val();
+    function decScore1() {
+        /*var initScore = $('.decScore').val();
         var afterScore = initScore--;
-        $('#team2Score').val(afterScore);
+        $('#team2Score').val(afterScore);*/
+        document.getElementById("team1Score").stepDown();
+    }
+    function incScore2(){
+        document.getElementById("team2Score").stepUp();
+    }
+    function decScore2(){
+        document.getElementById("team2Score").stepDown();
     }
 </script>
 <div id="team1">
 </div>
 
 <div id="score1">
-    <button class="decScore" onclick="decScore()">-</button>
+    <button class="decScore" onclick="decScore1()">-</button>
     <input type="number" id="team1Score" value="0" min="0" max="13">
-    <button class="incScore" onclick="incScore()">+</button>
+    <button class="incScore" onclick="incScore1()">+</button>
 </div>
 <div>
-    <button class="decScore" onclick="decScore()">-</button>
+    <button class="decScore" onclick="decScore2()">-</button>
     <input type="number" id="team2Score" value="0" min="0" max"13">
-    <button class="incScore" onclick="incScore()">+</button>
+    <button class="incScore" onclick="incScore2()">+</button>
 </div>
 
 <div id="submit">
